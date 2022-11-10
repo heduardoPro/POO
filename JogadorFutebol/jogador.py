@@ -68,7 +68,7 @@ class JogadorFutebol:
             else:
                 print("você se aposentará em {} anos".format(35-self.__idade))
     def __str__(self) :
-        return "Nome: %s, Posição: %s, Nascimento: %s, Nacionalidade: %s, Altura: %f, Peso: %d" % \
+        return "Nome do jogador: %s, Posição: %s, Data de Nascimento: %s, Nacionalidade: %s, Altura: %f, Peso: %d" % \
                 (self.__nome, self.__posicao, self.__nascimento, self.__nacionalidade, self.__altura, self.__peso)
 
 jogador = JogadorFutebol('Eduardo', 'atacante', datetime.date(2002, 12, 15), 'brasileiro', 1.80, 90)

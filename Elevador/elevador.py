@@ -6,9 +6,6 @@ class Elevador:
         self.__capacidade = capacidade
         self.__pessoas = 0
         
-    def Inicializar(self, total_andares, capacidade):
-        self.__total_andares = total_andares
-        self.__capacidade = capacidade
 
     def Entrar(self):
         if self.__pessoas < self.__capacidade:
@@ -33,9 +30,11 @@ class Elevador:
 
     def Descer(self):
         if self.__andar_atual > 0 and self.__andar_atual <= self.__total_andares:
+            print("Você esta descendo para o andar {}".format(self.__andar_atual))
             self.__andar_atual -= 1
+            print("O elevador chegou ao {}° andar".format(self.__andar_atual))
         else:
-            print('O elevador já está no térreo')
+            print('Você está no térreo')
 
     def get_total_andares(self):
         return self.__total_andares
@@ -56,4 +55,21 @@ class Elevador:
         self.__capacidade = capacidade
 
     def get_pessoas(self, pessoas):
-        self.__pessoas
+        self.__pessoas  = pessoas
+
+elevador = Elevador(int(input('Quantidade de andares: ')), int(input('Capacidade máxima do elevador: ')))
+
+while(True):
+    açao = int(input('\nQual ação voce deseja realizar? \n 1 - Subir: \n 2 - Descer: \n 3 - Entrar: \n 4 - Sair: \n\n '))
+    if açao == 1:
+        elevador.Subir()
+        break
+    if açao == 2:
+        elevador.Descer()
+        break
+    if açao == 3:
+        elevador.Entrar()
+        break
+    if açao == 4:
+        elevador.Sair()
+        break
