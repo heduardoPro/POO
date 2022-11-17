@@ -1,14 +1,32 @@
-'''Importação da biblioteca datetime'''
-import datetime
+from datetime import date, timedelta
 
 class Data:
-    '''Aplicando o construtor com os atributos iniciais'''
-    def __init__(self, dia = datetime.date.today().day, mes = datetime.date.today().month, ano = datetime.date.today().year):
-        self.__dia = dia
-        self.__mes = mes
-        self.__ano = ano
+    '''quando a data não for inicializada no construtor, é inserida a data de hoje'''
+    def __init__(self, dia = date.today().day, mes = date.today().month, ano = date.today().year):
 
-    '''Métodos getters/setters para cada atributo'''
+        '''Verificação de datas válidas'''
+
+        if mes > 0 and mes <=12:
+            self.__mes =  mes
+
+        if ano > 0:
+            self.__ano = ano
+        
+        if( mes in (1, 3, 5, 7, 8, 10, 12) and dia <= 31):
+            self.__dia = dia
+
+        elif( mes in (4, 6, 9, 11) and (dia <=30)):
+            self.__dia = dia
+
+        elif (mes == 2):
+            if ano % 4 == 0 and ano % 100 != 0 or ano % 400 == 0 and dia <=29:
+                self.__dia = dia
+            else:
+                self.__dia = dia
+        
+        else:
+            print('Data inválida')
+
     def get_dia(self):
         return self.__dia
 
@@ -17,53 +35,89 @@ class Data:
 
     def get_mes(self):
         return self.__mes
-        
+
     def set_mes(self, mes):
         self.__mes = mes
 
     def get_ano(self):
         return self.__ano
-
-    def set_ano(self, ano):
-        self.__ano = ano 
-            
     
-    def __str__(self):
-        return '{}/{}/{}'.format(self.__dia, self.__mes, self.__ano)
+    def set_ano(self, ano):
+        self.__ano = ano
 
-    '''Método para avançar a data para o dia seguinte'''
+    def __add__(self, dado):
+        if isinstance(dado, Data):
+            tempo = dado.__dia + dado.__ano * 365
+
+            for i in range(0, self.__mes - 1):
+                if (i == 2):
+                    if (self.bissexto()):
+                        tempo += 29
+                    else:
+                        tempo += 28
+
+                elif (i % 2 == 0):
+                    tempo += 31
+
+                elif (i % 2 != 0):
+                    tempo += 30
+
+            novaData = (self.tipoData() + timedelta(days=tempo))
+            return Data(novaData.day, novaData.month, novaData.year)
+
+        elif isinstance(dado, int):
+            novaData = (self.tipoData() + timedelta(days=dado))
+            return Data(novaData.day, novaData.month, novaData.year)
+    
+                
+    def bissexto(self):
+
+        '''metodo que verifica se o ano é bissexto'''
+
+        if (self.__ano % 4 == 0 and self.__ano % 100 != 0) or (self.__ano % 400 == 0):
+            print('Ano bissexto')
+        else:
+            print('O ano não é bissexto')
+
     def diaSeguinte(self):
-        '''1° Se a data for 31/12/0000, o dia seguinte será 01/01/0001
-           2° Se o mes terminar com 31, ou seja, for ímpar ele passsará pro dia 01 do próximo mes.
-           3° Se o mes terminar com 3, ou seja, for par ele passsará pro dia 01 do próximo mes.'''
-        if self.__dia <= 31 and self.__ano == 12:
-            self.__dia += 1
-            self.__mes += 1  
+        '''
+        metodo que avança a data em 1 dia:
+
+        31/12  incrementa ano, mes = 1 (janeiro)
+        bissexto dia 29, incrementa mês e dia = 1
+        dia 28 incrementa mês e dia = 1
+        meses com 30 dias incrementa mês e dia = 1
+        meses com 31 dias incrementa mês e dia = 1
+        o restante das datas incrementa 1 dia'''
+
+        if ((self.__dia == 30 and self.__mes == 12)):
             self.__ano += 1
-        elif ((self.__dia == 31 and self.__mes < 12 % 2 != 0)):
+            self.__dia = 1
+            self.__mes = 1
+
+        elif(self.__mes == 2):
+            if (self.bissexto() and self.__dia == 29):
+                self.__mes += 1
+                self.__dia = 1
+
+            elif (not self.bissexto() and self.__dia == 28):
+                self.__mes += 1
+                self.__dia = 1
+
+            else:
+                self.__dia += 1
+
+        elif ((self.__dia == 31 and self.__mes < 12 and self.__mes % 2 != 0)):
             self.__mes += 1
             self.__dia = 1
-        elif ((self.__dia == 30 and self.__mes < 12 % 2 == 0)):
+
+        elif ((self.__dia == 30 and self.__mes < 12 and self.__mes % 2 == 0)):
             self.__mes += 1
             self.__dia = 1
+
         else:
             self.__dia += 1
 
-    '''méMtodo para verificar se o ano é bissexto.'''
-    def anoBissexto(self):
-        '''Se o ano for divisível por 4, 100 e 400 o ano será bissexto, Caso contrário o ano não será bissexto.'''
-        if self.__ano % 4 == 0:
-            if self.__ano % 100 == 0:
-                if self.__ano % 400 == 0:
-                    return True
-                
-                else:
-                    return False
-            else:
-                return False
-        else: 
-            return False
-
-    def __add__(self, dado):
-        pass
-
+    '''Metodo que retorna a data como string'''
+    def __str__(self):
+        return ('Data: {}/{}/{}'.format(self.__dia, self.__mes, self.__ano))

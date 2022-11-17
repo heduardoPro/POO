@@ -1,9 +1,7 @@
 from data import Data
 
-data = Data(31, 12, 2002)
-print(data)
-data.diaSeguinte()
+data = Data(30, 12, 2022)
 print(data)
 
-data1 = Data()
-print(data)
+data2 = Data()
+print(data2)
