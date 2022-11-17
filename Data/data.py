@@ -45,7 +45,35 @@ class Data:
     def set_ano(self, ano):
         self.__ano = ano
 
-     
+    def __add__(self, valor):
+        if isinstance(valor, Data):
+            tempo = valor.__dia + valor.__ano * 365
+
+            for i in range(0, self.__mes - 1):
+                if (i == 2):
+                    if (self.bissexto()):
+                        tempo += 29
+                    else:
+                        tempo += 28
+
+                elif (i % 2 == 0):
+                    tempo += 31
+
+                elif (i % 2 != 0):
+                    tempo += 30
+
+            novaData = (self.tipoData() + timedelta(days=tempo))
+            return Data(novaData.day, novaData.month, novaData.year)
+
+        elif isinstance(valor, int):
+            novaData = (self.tipoData() + timedelta(days=valor))
+            return Data(novaData.day, novaData.month, novaData.year)
+    
+    def __radd__(self, valor):
+        return self.__add__(valor)
+
+    def tipoData(self):
+        return date(day=self.__dia, month=self.__mes, year=self.__ano)
                 
     def bissexto(self):
 
