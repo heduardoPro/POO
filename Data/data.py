@@ -45,30 +45,7 @@ class Data:
     def set_ano(self, ano):
         self.__ano = ano
 
-    def __add__(self, dado):
-        if isinstance(dado, Data):
-            tempo = dado.__dia + dado.__ano * 365
-
-            for i in range(0, self.__mes - 1):
-                if (i == 2):
-                    if (self.bissexto()):
-                        tempo += 29
-                    else:
-                        tempo += 28
-
-                elif (i % 2 == 0):
-                    tempo += 31
-
-                elif (i % 2 != 0):
-                    tempo += 30
-
-            novaData = (self.tipoData() + timedelta(days=tempo))
-            return Data(novaData.day, novaData.month, novaData.year)
-
-        elif isinstance(dado, int):
-            novaData = (self.tipoData() + timedelta(days=dado))
-            return Data(novaData.day, novaData.month, novaData.year)
-    
+     
                 
     def bissexto(self):
 
@@ -91,21 +68,22 @@ class Data:
         o restante das datas incrementa 1 dia'''
 
         if (self.__mes == 12 and self.__dia == 31):
+            self.__dia = 1
             self.__mes = 1
             self.__ano +=1
 
-        if (self.__mes in (1, 3, 5, 7, 8, 10) and self.__dia == 31):
+        elif (self.__mes in (1, 3, 5, 7, 8, 10) and self.__dia == 31):
             self.__dia = 1
             self.__mes += 1
         
-        elif ((self.__mes == 2) and (self.__ano % 4 == 0 and self.__ano % 100 != 0 or self.__ano % 400 == 0 ) and self.__dia == 29):
-            self.__dia = 1
-            self.__mes += 1
+        elif (self.__mes == 2) and (self.__ano % 4 == 0 and self.__ano % 100 != 0 or self.__ano % 400 == 0 ):
+            if self.__dia == 29:   
+                self.__dia = 1
+                self.__mes += 1
 
-        elif ((self.__mes == 2) and (self.__ano % 4 == 0 and self.__ano % 100 != 0 or self.__ano % 400 == 0 ) and self.__dia == 28):
+            elif self.__dia == 28:
+                self.__dia += 1
 
-            self.__dia += 1
-            
         elif (self.__mes == 2 and self.__ano % 4 != 0 and self.__ano % 100 == 0 or self.__ano % 400 != 0 and self.__dia == 28):
             self.__dia = 1
             self.__mes += 1
