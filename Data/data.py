@@ -90,30 +90,29 @@ class Data:
         meses com 31 dias incrementa mês e dia = 1
         o restante das datas incrementa 1 dia'''
 
-        if ((self.__dia == 30 and self.__mes == 12)):
-            self.__ano += 1
-            self.__dia = 1
+        if (self.__mes == 12 and self.__dia == 31):
             self.__mes = 1
+            self.__ano +=1
 
-        elif(self.__mes == 2):
-            if (self.bissexto() and self.__dia == 29):
-                self.__mes += 1
-                self.__dia = 1
-
-            elif (not self.bissexto() and self.__dia == 28):
-                self.__mes += 1
-                self.__dia = 1
-
-            else:
-                self.__dia += 1
-
-        elif ((self.__dia == 31 and self.__mes < 12 and self.__mes % 2 != 0)):
-            self.__mes += 1
+        if (self.__mes in (1, 3, 5, 7, 8, 10) and self.__dia == 31):
             self.__dia = 1
-
-        elif ((self.__dia == 30 and self.__mes < 12 and self.__mes % 2 == 0)):
             self.__mes += 1
+        
+        elif ((self.__mes == 2) and (self.__ano % 4 == 0 and self.__ano % 100 != 0 or self.__ano % 400 == 0 ) and self.__dia == 29):
             self.__dia = 1
+            self.__mes += 1
+
+        elif ((self.__mes == 2) and (self.__ano % 4 == 0 and self.__ano % 100 != 0 or self.__ano % 400 == 0 ) and self.__dia == 28):
+
+            self.__dia += 1
+            
+        elif (self.__mes == 2 and self.__ano % 4 != 0 and self.__ano % 100 == 0 or self.__ano % 400 != 0 and self.__dia == 28):
+            self.__dia = 1
+            self.__mes += 1
+        
+        elif (self.__mes in (4, 6, 9, 11) and (self.__dia) == 30):
+            self.__dia = 1
+            self.__mes += 1
 
         else:
             self.__dia += 1
