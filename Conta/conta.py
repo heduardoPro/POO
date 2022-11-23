@@ -19,17 +19,7 @@ class Conta:
         else:
             self._saldo -= valor
             print("\nSaque de {}, realizado!".format(valor))
-            return True
-    
-    def transfere_para(self, conta_destino, valor):
-        retirou = self.saca(valor)
-        if(retirou):
-            conta_destino.deposita(valor)
-            print("\nTransferência realizada!")
-            return True
-        else:
-            print("\nHouve um problema ao tentar realizar a transferência!")
-            return False            
+            return True           
 
     def atualiza(self, taxa):
         self._saldo += self._saldo * taxa
