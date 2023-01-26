@@ -4,7 +4,6 @@ from tripulacao import Tripulante
 from voo import Voo
 from passageiro import Passageiro
 from operadores import Operadores
-from reserva import Reserva
 
 lista_passageiros = []
 lista_aeroportos = []
@@ -34,7 +33,7 @@ voo1.cadastrar_tripulacao(joana)
 voo1.cadastrar_tripulacao(manoel)
 voo1.cadastrar_tripulacao(carla)
 
-passageiro1 = Passageiro('valeria', '111.222.333-44', 'valeria@gmail.com', '(84) 9 9999-9999')
+passageiro1 = Passageiro('Demetrios', '111.222.333-44', 'demetrios@gmail.com', '(84) 9 9999-9999')
 lista_passageiros.append(passageiro1)
 
 def print_sitema_reserva():
@@ -43,7 +42,7 @@ def print_sitema_reserva():
 def digite():
     print('-'*30, "DIGITE A OPERAÇÃO DESEJADA " , '-'*30)
 
-def executar_airport():
+def executar_aeroporto():
     digite()
     print("\n1.Criar Aeroporto \n2.Ver todos aeroportos \n3.Sair")
     opcao = int(input())
@@ -62,7 +61,7 @@ def executar_airport():
 
 def executar_voo():
     digite()
-    print("\n1.Criar Voo \n2.Ver todos os voos \n3.Ver tripulaçã \n4.Sair")
+    print("\n1.Criar Voo \n2.Ver todos os voos \n3.Ver tripulação \n4.Sair")
     opcao = int(input())
 
     if opcao == 1:
@@ -127,7 +126,7 @@ while True:
     print("\n1.Aeroporto\n2.Voo\n3.Passageiro\n4.Operador\n5.Sair")
     option = int(input())
     if option == 1:
-        executar_airport()
+        executar_aeroporto()
     if option == 2:
         executar_voo()
     if option == 3:

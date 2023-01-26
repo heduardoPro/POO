@@ -49,8 +49,6 @@ class Voo:
         return self.__destino
 
     def get_assentosLivres(self):
-
-        self.__assentos_livres = self.__assentos_livres
         return self.__assentos_livres
 
     def get_tripulacao(self):
@@ -58,7 +56,6 @@ class Voo:
 
     def get_reservas_voo(self):
         return self.__reservas_voo
-
 
     '''Setters'''
     def set_tipo(self, other: str) -> None:
